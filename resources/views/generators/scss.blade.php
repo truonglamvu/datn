@@ -1,0 +1,3 @@
+#{{str_slug($ClassName)}}{
+	
+}
