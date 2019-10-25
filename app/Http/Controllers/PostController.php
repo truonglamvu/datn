@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Repository\Post\PostRepository;
 use App\Repository\Post\PostModel;
+use App\Repository\Permission\PermissionModel;
+use App\Repository\Role\RoleModel;
 use App\Repository\Menus\MenusRepository;
 use App\Repository\Menus\MenusModel;
+use App\Repository\Users\UsersModel;
 use Auth;
+use GuzzleHttp\Client;
 use App\User;
 class PostController extends Controller
 {
@@ -458,5 +462,19 @@ class PostController extends Controller
         }
 
         return $result;
+    }
+
+    public function dashboard(UsersModel $userModel, MenusModel $menusModel, RoleModel $roleModel, PostModel $postModel, PermissionModel $permissionModel)
+    {
+        $user = $userModel->orderBy('created_at', 'desc')->get();
+        $menu = $menusModel->get()->count();
+        $role = $roleModel->get()->count();
+        $post = $postModel->get()->count();
+        $time_create_new_user = $userModel->select('created_at')->orderBy('created_at','desc')->first();
+        $time_create_new_menu = $menusModel->select('created_at')->orderBy('created_at','desc')->first();
+        $time_create_new_role = $roleModel->select('created_at')->orderBy('created_at','desc')->first();
+        $time_create_new_post = $postModel->select('created_at')->orderBy('created_at','desc')->first();
+        $time_create_new_permission = $permissionModel->select('created_at')->orderBy('created_at','desc')->first();
+        return view('admin.dashboard', compact('user', 'menu', 'role', 'post', 'time_create_new_user', 'time_create_new_menu', 'time_create_new_role', 'time_create_new_post', 'time_create_new_permission'));
     }
 }

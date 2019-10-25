@@ -55,7 +55,9 @@
                         </div>
                     @endif
                 </div>
-                <button type="submit" class="btn btn-primary" style="float:right;">Thêm mới</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" style="float:right;">Thêm mới</button>
+                </div>
             </form>
             <a href="{{ route('permissionBackPage') }}" class="btn btn-success" style="margin-top:270px;width: 120px; "><i class="fa fa-reply" aria-hidden="true"></i></a>
         </div>

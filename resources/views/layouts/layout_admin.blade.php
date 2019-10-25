@@ -58,6 +58,19 @@
         .col-half-offset{
             width:20%;
         }
+        .chart--container {
+            height: 100%;
+            width: 100%;
+            min-height: 450px;
+        }
+ 
+        .zc-ref {
+            display: none;
+        }
+ 
+        zing-grid[loading] {
+            height: 450px;
+        }
     </style>
 
     <script src="{{ asset('js/jquery-2.1.4.min.js')}}"></script>
@@ -131,6 +144,9 @@
                             </div>
                         </li>
                         <li>
+                            <a href="{{ route('dasboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li>
                             <a href="{{ route('document.index') }}"><i class="fa fa-list" aria-hidden="true"></i> Danh sách Docs API</a>
                         </li>
                         <li>
@@ -168,6 +184,7 @@
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.13.3/jsoneditor.min.css" type="text/css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.13.3/jsoneditor-minimalist.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
     <script type="text/javascript">
         $('.datepicker').datepicker();
         $(document).ready(function(){

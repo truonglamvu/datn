@@ -66,8 +66,10 @@ Route::group(["prefix" => 'admin',  'middleware' => 'auth'], function() {
 	Route::put('menu-loadrole/unpick-role-menu/{id}', 'MenuController@unPickRole');
 	Route::resource('menu','MenuController');
 	/* ------------------------------------------------------------------------------ */
-	
+
 	Route::get('crons/export', 'ExportController@index')->name('export');
+
+	Route::get('/dasboard', 'PostController@dashboard')->name('dasboard');
 
 });
 
