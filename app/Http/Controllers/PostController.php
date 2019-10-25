@@ -15,6 +15,7 @@ use App\Repository\Users\UsersModel;
 use Auth;
 use GuzzleHttp\Client;
 use App\User;
+use Carbon\Carbon;
 class PostController extends Controller
 {
     
@@ -475,6 +476,59 @@ class PostController extends Controller
         $time_create_new_role = $roleModel->select('created_at')->orderBy('created_at','desc')->first();
         $time_create_new_post = $postModel->select('created_at')->orderBy('created_at','desc')->first();
         $time_create_new_permission = $permissionModel->select('created_at')->orderBy('created_at','desc')->first();
-        return view('admin.dashboard', compact('user', 'menu', 'role', 'post', 'time_create_new_user', 'time_create_new_menu', 'time_create_new_role', 'time_create_new_post', 'time_create_new_permission'));
+
+        $now = Carbon::now();
+        $user_count_chart = [];
+        $post_count_chart = [];
+        $menu_count_chart = [];
+        $weekStartDate = $now->startOfWeek()->format('Y-m-d');
+        $weekEndDate = $now->endOfWeek()->format('Y-m-d');
+        // count user in week
+        $count_mon_user = $userModel->where('created_at', 'like', $weekStartDate.'%')->count();
+        $count_tue_user = $userModel->where('created_at', 'like', $now->startOfWeek()->addDays(1)->format('Y-m-d').'%')->count();
+        $count_wed_user = $userModel->where('created_at', 'like', $now->startOfWeek()->addDays(2)->format('Y-m-d').'%')->count();
+        $count_thu_user = $userModel->where('created_at', 'like', $now->startOfWeek()->addDays(3)->format('Y-m-d').'%')->count();
+        $count_fri_user = $userModel->where('created_at', 'like', $now->startOfWeek()->addDays(4)->format('Y-m-d').'%')->count();
+        $count_sat_user = $userModel->where('created_at', 'like', $now->startOfWeek()->addDays(5)->format('Y-m-d').'%')->count();
+        $count_sun_user = $userModel->where('created_at', 'like', $weekEndDate.'%')->count();
+        // count post in week
+        $count_mon_post = $postModel->where('created_at', 'like', $weekStartDate.'%')->count();
+        $count_tue_post = $postModel->where('created_at', 'like', $now->startOfWeek()->addDays(1)->format('Y-m-d').'%')->count();
+        $count_wed_post = $postModel->where('created_at', 'like', $now->startOfWeek()->addDays(2)->format('Y-m-d').'%')->count();
+        $count_thu_post = $postModel->where('created_at', 'like', $now->startOfWeek()->addDays(3)->format('Y-m-d').'%')->count();
+        $count_fri_post = $postModel->where('created_at', 'like', $now->startOfWeek()->addDays(4)->format('Y-m-d').'%')->count();
+        $count_sat_post = $postModel->where('created_at', 'like', $now->startOfWeek()->addDays(5)->format('Y-m-d').'%')->count();
+        $count_sun_post = $postModel->where('created_at', 'like', $weekEndDate.'%')->count();
+        // count menu in week
+        $count_mon_menu = $menusModel->where('created_at', 'like', $weekStartDate.'%')->count();
+        $count_tue_menu = $menusModel->where('created_at', 'like', $now->startOfWeek()->addDays(1)->format('Y-m-d').'%')->count();
+        $count_wed_menu = $menusModel->where('created_at', 'like', $now->startOfWeek()->addDays(2)->format('Y-m-d').'%')->count();
+        $count_thu_menu = $menusModel->where('created_at', 'like', $now->startOfWeek()->addDays(3)->format('Y-m-d').'%')->count();
+        $count_fri_menu = $menusModel->where('created_at', 'like', $now->startOfWeek()->addDays(4)->format('Y-m-d').'%')->count();
+        $count_sat_menu = $menusModel->where('created_at', 'like', $now->startOfWeek()->addDays(5)->format('Y-m-d').'%')->count();
+        $count_sun_menu = $menusModel->where('created_at', 'like', $weekEndDate.'%')->count();
+
+        array_push($user_count_chart, $count_mon_user, $count_tue_user, $count_wed_user, $count_thu_user, $count_fri_user, $count_sat_user, $count_sun_user);
+        array_push($post_count_chart, $count_mon_post, $count_tue_post, $count_wed_post, $count_thu_post, $count_fri_post, $count_sat_post, $count_sun_post);
+        array_push($menu_count_chart, $count_mon_menu, $count_tue_menu, $count_wed_menu, $count_thu_menu, $count_fri_menu, $count_sat_menu, $count_sun_menu);
+        $user_count_chart = json_encode($user_count_chart);
+        $post_count_chart = json_encode($post_count_chart);
+        $menu_count_chart = json_encode($menu_count_chart);
+        return view('admin.dashboard', compact('user', 'menu', 'role', 'post', 'time_create_new_user', 'time_create_new_menu', 'time_create_new_role', 'time_create_new_post', 'time_create_new_permission', 'user_count_chart', 'post_count_chart', 'menu_count_chart'));
+    }
+
+    public function fetchDataCategories(UsersModel $userModel, MenusModel $menusModel, RoleModel $roleModel, PostModel $postModel, PermissionModel $permissionModel){
+        $user = $userModel->get()->count();
+        $menu = $menusModel->get()->count();
+        $role = $roleModel->get()->count();
+        $post = $postModel->get()->count();
+        $permission = $permissionModel->get()->count();
+        return response()->json([
+            'number_of_user' => $user,
+            'number_of_menu' => $menu,
+            'number_of_role' => $role,
+            'number_of_post' => $post,
+            'number_of_permission' => $permission
+        ]);
     }
 }

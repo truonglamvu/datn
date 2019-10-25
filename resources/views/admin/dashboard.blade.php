@@ -110,11 +110,17 @@
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                    <i class="fa fa-clock-o fa-fw"></i> Activity chart for the week
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div id="myChart" class="chart--container">
+                    </div>
+                    <hr>
+                    <div id="myChart1" class="chart--container">
+                    </div>
+                    <hr>
+                    <div id="myChart2" class="chart--container">
                     </div>
                 </div>
                 <!-- /.panel-body -->
@@ -198,7 +204,7 @@
           const myConfig = {
             type: 'bar',
             title: {
-              text: 'Hello World Demo',
+              text: 'User Chart',
               fontSize: 24,
             },
             legend: {
@@ -212,7 +218,7 @@
             },
             scaleY: {
               // scale label with unicode character
-              label: { text: 'Temperature (°F)' }
+              label: { text: 'Users created during the week' }
             },
                 plot: {
               // animation docs here:
@@ -227,19 +233,8 @@
             series: [
               {
                 // plot 1 values, linear data
-                values: [23,20,27,29,25,17,15],
-                text: 'Week 1',
+                values: {{$user_count_chart}},
               },
-              {
-                // plot 2 values, linear data
-                values: [35,42,33,49,35,47,35],
-                text: 'Week 2'
-              },
-              {
-                // plot 2 values, linear data
-                values: [15,22,13,33,44,27,31],
-                text: 'Week 3'
-              }
             ]
           };
          
@@ -248,6 +243,97 @@
           zingchart.render({ 
             id: 'myChart', 
             data: myConfig, 
+            height: '100%', 
+            width: '100%' 
+          });
+          const myConfig1 = {
+            type: 'bar',
+            title: {
+              text: 'Post Chart',
+              fontSize: 24,
+            },
+            legend: {
+                    draggable: true,
+            },
+            scaleX: {
+              // set scale label
+              label: { text: 'Days' },
+              // convert text on scale indices
+              labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            scaleY: {
+              // scale label with unicode character
+              label: { text: 'Posts created during the week' }
+            },
+                plot: {
+              // animation docs here:
+              // https://www.zingchart.com/docs/tutorials/design-and-styling/chart-animation/#animation__effect
+              animation:{
+                effect: 'ANIMATION_EXPAND_BOTTOM', 
+                method: 'ANIMATION_STRONG_EASE_OUT',
+                sequence: 'ANIMATION_BY_NODE',
+                speed: 275,
+              }
+            },
+            series: [
+              {
+                // plot 1 values, linear data
+                values: {{$post_count_chart}},
+              },
+            ]
+          };
+         
+          // render chart with width and height to
+          // fill the parent container CSS dimensions
+          zingchart.render({ 
+            id: 'myChart1', 
+            data: myConfig1, 
+            height: '100%', 
+            width: '100%' 
+          });
+
+          const myConfig2 = {
+            type: 'bar',
+            title: {
+              text: 'Menu Chart',
+              fontSize: 24,
+            },
+            legend: {
+                    draggable: true,
+            },
+            scaleX: {
+              // set scale label
+              label: { text: 'Days' },
+              // convert text on scale indices
+              labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            scaleY: {
+              // scale label with unicode character
+              label: { text: 'Menus created during the week' }
+            },
+                plot: {
+              // animation docs here:
+              // https://www.zingchart.com/docs/tutorials/design-and-styling/chart-animation/#animation__effect
+              animation:{
+                effect: 'ANIMATION_EXPAND_BOTTOM', 
+                method: 'ANIMATION_STRONG_EASE_OUT',
+                sequence: 'ANIMATION_BY_NODE',
+                speed: 275,
+              }
+            },
+            series: [
+              {
+                // plot 1 values, linear data
+                values: {{$menu_count_chart}},
+              },
+            ]
+          };
+         
+          // render chart with width and height to
+          // fill the parent container CSS dimensions
+          zingchart.render({ 
+            id: 'myChart2', 
+            data: myConfig2, 
             height: '100%', 
             width: '100%' 
           });

@@ -70,6 +70,7 @@ Route::group(["prefix" => 'admin',  'middleware' => 'auth'], function() {
 	Route::get('crons/export', 'ExportController@index')->name('export');
 
 	Route::get('/dasboard', 'PostController@dashboard')->name('dasboard');
+	Route::get('/fetch-list-number-categories', 'PostController@fetchDataCategories');
 
 });
 

@@ -61,7 +61,11 @@
         .chart--container {
             height: 100%;
             width: 100%;
-            min-height: 450px;
+            min-height: 250px;
+        }
+
+        .sidebar{
+            margin-top: 10px !important;
         }
  
         .zc-ref {
@@ -69,7 +73,7 @@
         }
  
         zing-grid[loading] {
-            height: 450px;
+            height: 250px;
         }
     </style>
 
@@ -144,22 +148,23 @@
                             </div>
                         </li>
                         <li>
-                            <a href="{{ route('dasboard') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="{{ route('dasboard') }}" class="row" style="width: 250px;margin-left:0px;"><span class="col-lg-10" style="padding-left:-10px"><i class="fa fa-fw fa-dashboard"></i> Dashboard</span></a>
+
                         </li>
                         <li>
-                            <a href="{{ route('document.index') }}"><i class="fa fa-list" aria-hidden="true"></i> Danh sách Docs API</a>
+                            <a href="{{ route('document.index') }}" class="row" style="width: 250px;margin-left:0px"><span class="col-lg-10" style="padding-left:-10px"><i class="fa fa-list" aria-hidden="true"></i> Danh sách Docs API </span> <span class="col-lg-2" style="background-color: #d9534f; border:1px solid #d9534f; color:white; height: 25px;"> <span class="post"> 0</span> </span></a>
                         </li>
                         <li>
-                            <a href="{{ route('user.index') }}"><i class="fa fa-users" aria-hidden="true"></i> Quản lý User</a>
+                            <a href="{{ route('user.index') }}" class="row" style="width: 250px;margin-left:0px"><span class="col-lg-10" style="padding-left:-10px"><i class="fa fa-users" aria-hidden="true"></i> Quản lý User</span> <span class="col-lg-2" style="background-color: #d9534f; border:1px solid #d9534f; color:white; height: 25px;"> <span class="user_count"> 0</span> </span></a>
                         </li>
                         <li>
-                            <a href="{{ route('role.index') }}"><i class="fa fa-edit fa-fw"></i> Quản lý Role</a>
+                            <a href="{{ route('role.index') }}" class="row" style="width: 250px;margin-left:0px"><span class="col-lg-10" style="padding-left:-10px"><i class="fa fa-edit fa-fw"></i> Quản lý Role</span> <span class="col-lg-2" style="background-color: #d9534f; border:1px solid #d9534f; color:white; height: 25px;"> <span class="role"> </span> 0</span></a>
                         </li>
                         <li>
-                            <a href="{{ route('permission.index') }}"><i class="fa fa-calendar-check-o"></i> Quản lý Permission</a>
+                            <a href="{{ route('permission.index') }}" class="row" style="width: 250px;margin-left:0px"><span class="col-lg-10" style="padding-left:-10px"><i class="fa fa-calendar-check-o"></i> Quản lý Permission</span> <span class="col-lg-2" style="background-color: #d9534f; border:1px solid #d9534f; color:white; height: 25px;"> <span class="permission"> 0</span> </span></a>
                         </li>
                         <li>
-                            <a href="{{ route('menu.index') }}"><i class="fa fa-bars"></i> Quản lý Menu</a>
+                            <a href="{{ route('menu.index') }}" class="row" style="width: 250px;margin-left:0px"><span class="col-lg-10" style="padding-left:-10px"><i class="fa fa-bars"></i> Quản lý Menu</span> <span class="col-lg-2" style="background-color: #d9534f; border:1px solid #d9534f; color:white; height: 25px;"> <span class="menu"> 0</span> </span></a>
                         </li>
                     </ul>
                 </div>
@@ -191,6 +196,18 @@
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/admin/fetch-list-number-categories",
+                data:{},
+                success:function(data){
+                    $(".user_count").html(data.number_of_user);
+                    $(".role").html(data.number_of_role);
+                    $(".menu").html(data.number_of_menu);
+                    $(".post").html(data.number_of_post);
+                    $(".permission").html(data.number_of_permission);
                 }
             });
 
