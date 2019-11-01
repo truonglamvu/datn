@@ -17,7 +17,7 @@
            @endif
         </div>
         <div class="col-sm-12">
-            <form id="form-submit" class="form-horizontal" method="POST" role="form">
+            <form id="form-submit" action="{{route("test-api")}}" class="form-horizontal" role="form">
                 {{ csrf_field() }}
 
                 <div class="form-group">
@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Parameters:</label>
                     <div class="box-param col-sm-10">
-                    @if(count(old('description_parameter_key'))>0)
+                    @if(gettype(old('description_parameter_key')) != "NULL" && old('description_parameter_key')->count() > 0)
                         @foreach(old('description_parameter_key') as $key=>$value)
                         <div class="parameter_list row row-pad5" style="margin-top:5px;" id="list_params">
                         
@@ -139,7 +139,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Header:</label>
                     <div class="box-header col-md-10">
-                        @if(count(old('header_key')) > 0)
+                        @if(gettype(old('header_key')) != "NULL" && old('header_key')->count() > 0)
                             @foreach(old('header_key') as $key => $value)
                             <div class="header_list row" style='margin-top:5px;'>
                                 <div class="col-md-4">

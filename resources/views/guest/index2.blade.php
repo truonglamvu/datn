@@ -81,7 +81,7 @@
                                         (*) is required.
                                        @endif
                                     </div>
-                                    @if(isset($postDetail->header) && !empty($postDetail->header))
+                                    @if(isset($postDetail->header) && !empty($postDetail->header) && $postDetail->header != 'a:1:{i:0;a:2:{s:10:"header_key";N;s:12:"header_value";N;}}')
                                         <div class="header-api">
                                             <h5>Headers</h5>
                                             <hr>
@@ -110,7 +110,7 @@
                                             <hr>
                                         </div>
                                     @endif
-                                    @if($postDetail->error != null)
+                                    @if($postDetail->error != 'a:1:{i:0;a:2:{s:10:"error_code";N;s:11:"description";N;}}')
                                         <h5>Errors</h5>
                                          <div class="table-responsive">
                                            <table class="table table-bordered table-exampled">

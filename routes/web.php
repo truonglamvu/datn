@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth'], function() {
 /* ------------------------------------------------------------------------------ */
 /* Test API */
 Route::get('/run-api/{id}', 'PostController@runApi')->name("runApi");
-Route::post('/test-api', 'PostController@testApi');
+Route::post('/test-api', 'PostController@testApi')->name('test-api');
 /* ------------------------------------------------------------------------------ */
 /* Login Controller */
 Route::get('/guest-login','LoginController@getViewLogin')->name('gLogin');

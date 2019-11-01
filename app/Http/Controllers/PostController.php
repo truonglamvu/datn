@@ -13,6 +13,7 @@ use App\Repository\Menus\MenusRepository;
 use App\Repository\Menus\MenusModel;
 use App\Repository\Users\UsersModel;
 use Auth;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App\User;
 use Carbon\Carbon;
@@ -405,7 +406,10 @@ class PostController extends Controller
         return view('error.404');
     }
     public function testApi(Request $request){
-        dd($request->all());
+        $client = new Client();
+        dd($client);
+        $result = $client->get('http://edutalk.vn/api/v1/exam/results?exam_id=8');
+
     }
 
     public function prettyPrint( $json )
