@@ -17,9 +17,7 @@
            @endif
         </div>
         <div class="col-sm-12">
-            <form id="form-submit" action="{{route("test-api")}}" class="form-horizontal" role="form">
-                {{ csrf_field() }}
-
+            <div id="form-submit" class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">URI & Method: </label>
                     <div class="col-sm-5">
@@ -46,8 +44,18 @@
                         @endif
                      </div>
                 </div>
+                <div class="form-group choose-type-param">
+                    <label class="col-sm-2 control-label">Type Parameter: </label>
+                    <div class="col-sm-5">
+                        <select class="form-control choose-type-param" >
+                            <option value="default">Default</option>
+                            <option value="body">Body</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5"></div>
+                </div>
               
-                <div class="form-group">
+                <div class="form-group default-parameter">
                     <label class="col-sm-2 control-label">Parameters:</label>
                     <div class="box-param col-sm-10">
                     @if(gettype(old('description_parameter_key')) != "NULL" && old('description_parameter_key')->count() > 0)
@@ -135,6 +143,12 @@
                     @endif
                     </div>
                 </div>
+                <div class="form-group body-parameter">
+                    <label class="col-sm-2 control-label">Parameters:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control body_param" rows="10" placeholder="Enter your parameters...."></textarea>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Header:</label>
@@ -175,8 +189,10 @@
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Data Return:</label>
-                    <div class="col-md-10 data-response">
-
+                    <div class="col-md-10">
+                        <textarea class="form-control data-response" rows="10">
+                            
+                        </textarea>
                     </div>
                 </div> 
                 <div class="form-group">
@@ -186,7 +202,18 @@
                 <div class="form-group pull-right">
                     <button type="submit" class="btn btn-primary test-api">Run test</button>
                 </div>
-            </form>
+            </div>
+            
+        </div>
+        <div class="modal fade" id="loadMe" tabindex="-1" role="dialog" aria-labelledby="loadMeLabel">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-body text-center">
+                <div class="loader"></div>
+                <h4>Loading...</h4>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
     <script type="text/javascript">
@@ -274,6 +301,18 @@
         };
 
         $(document).ready(function(){
+            $(".body-parameter").css('display','none');
+            $(".default-parameter").css('display','block');
+            $(".choose-type-param").change(function(){
+                var type_param = $(this).val();
+                if (type_param == "default"){
+                    $(".body-parameter").css('display','none');
+                    $(".default-parameter").css('display','block');
+                } else if (type_param == "body") {
+                    $(".body-parameter").css('display','block');
+                    $(".default-parameter").css('display','none');
+                }
+            })
             $('.plus').click(function(e){
                 var html = '';
                 html += "<div class='parameter_list row row-pad5' style='margin-top:5px;'>";
@@ -321,10 +360,22 @@
         });
         $('.test-api').click(function(){
             var data = [];
+            $("#loadMe").modal({
+              backdrop: "static", //remove ability to close modal with click
+              keyboard: false, //remove option to close with keyboard
+              show: true //Display loader!
+            });
             $.ajax({
                 type: "POST",
                 url: "/test-api",
                 data: data,
+                success:function(response){
+                    $("#loadMe").modal("hide");
+                    console.log(JSON.stringify(response.data));
+                    var info = JSON.stringify(response.data,null,"\t");
+                    $(".data-response").html('');
+                    $(".data-response").append(info);
+                },
             });
         });
     </script>

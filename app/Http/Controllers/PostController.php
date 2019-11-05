@@ -17,6 +17,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use App\User;
 use Carbon\Carbon;
+use Ixudra\Curl\Facades\Curl;
 class PostController extends Controller
 {
     
@@ -406,10 +407,21 @@ class PostController extends Controller
         return view('error.404');
     }
     public function testApi(Request $request){
-        $client = new Client();
-        dd($client);
-        $result = $client->get('http://edutalk.vn/api/v1/exam/results?exam_id=8');
-
+        $client = new \GuzzleHttp\Client();
+        try {
+            $result = $client->request("POST", 'https://api.edumall.vn/api/courses/all/basic',
+                [
+                    'form_params'=> []
+                    
+                ]
+            );
+            $body = json_decode($result->getBody(), true);
+            return response()->json([
+                'data' => $body
+            ]);
+        } catch(ClientErrorResponseException $exception){
+            $responseBody = $exception->getResponse()->getBody(true);
+        }
     }
 
     public function prettyPrint( $json )

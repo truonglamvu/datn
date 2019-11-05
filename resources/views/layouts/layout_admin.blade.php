@@ -75,6 +75,32 @@
         zing-grid[loading] {
             height: 250px;
         }
+        .loader {
+          position: relative;
+          text-align: center;
+          margin: 15px auto 35px auto;
+          z-index: 9999;
+          display: block;
+          width: 80px;
+          height: 80px;
+          border: 10px solid rgba(0, 0, 0, .3);
+          border-radius: 50%;
+          border-top-color: #000;
+          animation: spin 1s ease-in-out infinite;
+          -webkit-animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+          to {
+            -webkit-transform: rotate(360deg);
+          }
+        }
+
+        @-webkit-keyframes spin {
+          to {
+            -webkit-transform: rotate(360deg);
+          }
+        }
     </style>
 
     <script src="{{ asset('js/jquery-2.1.4.min.js')}}"></script>

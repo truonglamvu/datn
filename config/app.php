@@ -181,6 +181,7 @@ return [
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
     ],
 
     /*
@@ -235,6 +236,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Curl'  => Ixudra\Curl\Facades\Curl::class,
     ],
 
 ];
