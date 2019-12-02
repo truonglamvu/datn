@@ -17,7 +17,7 @@ class UsersRepository extends Repository implements UsersInterface
     {
         $user = $this->_model->create([
             'name'  => $params['name'],
-            'date_of_birth' =>  $params['date_of_birth'],
+            'date_of_birth' =>  date('Y-m-d', strtotime($params['date_of_birth'])),
             'address'   =>  $params['address'],
             'gender'    =>  $params['gender'],
             'phone'     =>  $params['phone'],

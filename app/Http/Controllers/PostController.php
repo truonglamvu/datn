@@ -408,6 +408,7 @@ class PostController extends Controller
     }
     public function testApi(Request $request){
         $client = new \GuzzleHttp\Client();
+        dd($request->all());
         try {
             $result = $client->request("POST", 'https://api.edumall.vn/api/courses/all/basic',
                 [

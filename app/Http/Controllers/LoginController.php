@@ -49,6 +49,7 @@ class LoginController extends Controller
             $user->roles()->attach($role->id);
             $user->save();
         }
+        auth()->login($user);
         return redirect('/');
     }
 }

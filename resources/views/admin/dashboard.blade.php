@@ -11,6 +11,7 @@
                     <strong>{{session('notification')}}</strong>
                 </div>
             @endif
+
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -29,6 +30,7 @@
                         </div>
                     </div>
                 </div>
+
                 <a href="#">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
@@ -141,6 +143,7 @@
                             <span class="pull-right text-muted small"><em>{{(isset($time_create_new_user->created_at)) ? $time_create_new_user->created_at->diffForHumans() : ""}}</em>
                             </span>
                         </a>
+
                         <a href="#" class="list-group-item">
                             <i class="fa fa-twitter fa-fw"></i> New Post
                             <span class="pull-right text-muted small"><em>{{(isset($time_create_new_post->created_at)) ? $time_create_new_post->created_at->diffForHumans() : ""}}</em>

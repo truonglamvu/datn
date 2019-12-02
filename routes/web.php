@@ -16,7 +16,7 @@
 /* ------------------------------------------------------------------------------ */
 Route::group(["prefix" => 'admin',  'middleware' => 'auth'], function() {
 	Route::get('/',function(){
-		return redirect('/admin/document');
+		return redirect('/admin/dasboard');
 	});
 	/* User Controller */
 	Route::get('information-user/{id}','UserController@getInfoUser')->name('informationUser');
