@@ -388,7 +388,7 @@ class PostController extends Controller
         return response()->json($output);
     }
 
-    public function runApi(PostRepository $post, $id, MenusRepository $menuRepository)
+    public function runApi(PostRepository $post, MenusRepository $menuRepository)
     {
          $dataType = [
             'String',
@@ -401,8 +401,7 @@ class PostController extends Controller
         if(Auth::user()->can('edit-document'))
         {
             $menus = $menuRepository->getAll();
-            $doc = $post->find($id);
-            return view('guest.test_api',compact(['doc','dataType', 'menus'])); 
+            return view('guest.test_api',compact(['dataType', 'menus'])); 
         }
         return view('error.404');
     }
@@ -411,14 +410,26 @@ class PostController extends Controller
         //      + https://jsonplaceholder.typicode.com/posts
         //      + https://jsonplaceholder.typicode.com/posts?id=2&userID=1
         $client = new \GuzzleHttp\Client();
-        // dd($request->all());
+        $params_api = [];
+        if (count($request['param_key']) > 0 && count($request['param_value'])) {
+            foreach ($request['param_key'] as $key => $field) {
+                foreach ($request['param_value'] as $key1 => $value) {
+                    if ($key == $key1) {
+                        $params_api[$field] = $value;
+                    }
+                }
+            }
+        }
+        $type_method = '';
+        if ($request['method_type'] == "GET") {
+            $type_method = 'query';
+        } else if($request['method_type'] == "POST") {
+            $type_method = 'form_params';
+        }
         try {
-            $result = $client->request("GET", 'https://jsonplaceholder.typicode.com/posts',
+            $result = $client->request($request['method_type'], $request['url_api'],
                 [
-                    'query'=> [
-                        'id' => 2,
-                        'userID' => 1
-                    ]
+                    $type_method => $params_api
                     
                 ]
             );

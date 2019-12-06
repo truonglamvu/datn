@@ -81,7 +81,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 /* ------------------------------------------------------------------------------ */
 /* Test API */
-Route::get('/run-api/{id}', 'PostController@runApi')->name("runApi");
+Route::get('/run-api', 'PostController@runApi')->name("runApi");
 Route::post('/test-api', 'PostController@testApi')->name('test-api');
 /* ------------------------------------------------------------------------------ */
 /* Login Controller */
