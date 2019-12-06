@@ -343,39 +343,39 @@
             $(this).parents('.header_list').remove();
         });
         $('.test-api').click(function(){
-            var url_api = $(".url_api").val();
-            var method_type = $(".method_type").val();
-            var param_key = [];
-            var param_value = [];
-            var param_description = [];
-            var param_type = [];
-            var param_require = [];
-            $('input[name^="description_parameter_key"]').each(function() {
-                param_key.push($(this).val());
-            });
-            $('input[name^="description_parameter_value"]').each(function() {
-                param_value.push($(this).val());
-            });
-            $('input[name^="description_parameter_description"]').each(function() {
-                param_description.push($(this).val());
-            });
-            $('input[name^="description_parameter_data_type"]').each(function() {
-                param_type.push($(this).val());
-            });
-            $('input[name^="description_parameter_required"]').each(function() {
-                param_require.push($(this).val());
-            });
-            var data = {
-                url_api: url_api,
-                method_type: method_type,
-                param_key: param_key,
-                param_value: param_value,
-                param_description: param_description,
-                param_type: param_type,
-                param_require: param_require,
+            // var url_api = $(".url_api").val();
+            // var method_type = $(".method_type").val();
+            // var param_key = [];
+            // var param_value = [];
+            // var param_description = [];
+            // var param_type = [];
+            // var param_require = [];
+            // $('input[name^="description_parameter_key"]').each(function() {
+            //     param_key.push($(this).val());
+            // });
+            // $('input[name^="description_parameter_value"]').each(function() {
+            //     param_value.push($(this).val());
+            // });
+            // $('input[name^="description_parameter_description"]').each(function() {
+            //     param_description.push($(this).val());
+            // });
+            // $('input[name^="description_parameter_data_type"]').each(function() {
+            //     param_type.push($(this).val());
+            // });
+            // $('input[name^="description_parameter_required"]').each(function() {
+            //     param_require.push($(this).val());
+            // });
+            // var data = {
+            //     // url_api: url_api,
+            //     // method_type: method_type,
+            //     // param_key: param_key,
+            //     // param_value: param_value,
+            //     // param_description: param_description,
+            //     // param_type: param_type,
+            //     // param_require: param_require,
                 
-            };
-            console.log(url_api, method_type, param_key, param_value, param_description, param_type, param_require);
+            // };
+            // console.log(url_api, method_type, param_key, param_value, param_description, param_type, param_require);
             $("#loadMe").modal({
               backdrop: "static", //remove ability to close modal with click
               keyboard: false, //remove option to close with keyboard
@@ -383,8 +383,8 @@
             });
             $.ajax({
                 type: "POST",
-                url: "/test-api",
-                data: data,
+                url: "{{route('test-api')}}",
+                data: {},
                 success:function(response){
                     $("#loadMe").modal("hide");
                     var info = JSON.stringify(response.data,null,"\t");

@@ -407,12 +407,18 @@ class PostController extends Controller
         return view('error.404');
     }
     public function testApi(Request $request){
+        // API: + https://api.edumall.vn/api/courses/all/basic method: GET
+        //      + https://jsonplaceholder.typicode.com/posts
+        //      + https://jsonplaceholder.typicode.com/posts?id=2&userID=1
         $client = new \GuzzleHttp\Client();
-        dd($request->all());
+        // dd($request->all());
         try {
-            $result = $client->request("POST", 'https://api.edumall.vn/api/courses/all/basic',
+            $result = $client->request("GET", 'https://jsonplaceholder.typicode.com/posts',
                 [
-                    'form_params'=> []
+                    'query'=> [
+                        'id' => 2,
+                        'userID' => 1
+                    ]
                     
                 ]
             );
