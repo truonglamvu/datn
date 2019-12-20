@@ -429,7 +429,11 @@ class PostController extends Controller
         try {
             $result = $client->request($request['method_type'], $request['url_api'],
                 [
-                    $type_method => $params_api
+                    $type_method => $params_api,
+                    'headers' =>
+                    [
+                        'authorization' => '99cdedb8-7cec-486b-b5b0-cd680a7d12cb'
+                    ]
                     
                 ]
             );
