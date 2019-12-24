@@ -4,12 +4,13 @@
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <!--[if IE]>
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <![endif]-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Mytour Docs API</title>
-      <link rel="icon" href="{{ asset('images/favicon1.ico') }}" type="image/x-icon">
+      <link rel="icon" href="{{ asset('images/favicon.png')}}" type="image/x-icon">
       <meta name="description" content="Pixxett API Docs Theme">
       <meta name="author" content="Pixxett">
       <meta name="copyright" content="Pixxett">
@@ -52,7 +53,7 @@
                         <div class="mm-toggle"><i class="fa fa-align-justify"></i><span class="mm-label">Menu</span> </div>
                      </div>
                      <a class="header__block header__brand" href="#">
-                        <h1> <img src="{{ asset('images/logo-mytour.png') }}" alt="API UI logo"></h1>
+                        <h1> <img src="{{ asset('images/logo.png')}}" alt="API UI logo"></h1>
                      </a>
                   </div>
                   <div class="col-lg-8 col-sm-8">
@@ -201,6 +202,11 @@
         <script src="{{ asset('js/toastr.min.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function(){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
                 $('body').scrollspy({ target: '#bs-docs-sidebar' });
                 $('#bs-docs-sidebar').on('activate.bs.scrollspy', function (e) {
                     var $that = $(e.target);

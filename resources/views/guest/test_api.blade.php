@@ -1,7 +1,7 @@
-@extends('layouts.layout_admin')
+@extends('layouts.layout_guest')
 
 @section('content')
-  <div class="row">
+  <div id="documenter_content" style="width: 60%">
         <div class="col-sm-12">
            <h3>Chạy thử nghiệm API </h3>
            <hr>
@@ -171,12 +171,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group box-response-data">
                     <label class="col-sm-2 control-label">Data Return:</label>
                     <div class="col-md-10">
-                        <textarea class="form-control data-response" rows="10">
+                        <a class="form-control data-response" style="max-height: 400px; height: 400px; overflow: scroll; background-color: black;">
                             
-                        </textarea>
+                        </a>
                     </div>
                 </div> 
                 <div class="form-group">
@@ -200,6 +200,11 @@
           </div>
         </div>
     </div>
+    <style type="text/css">
+        .background-actual{
+            display:none;
+        }
+    </style>
     <script type="text/javascript">
         function populate(frm, data) {
             var $des_params = {};
@@ -342,6 +347,7 @@
             e.preventDefault();
             $(this).parents('.header_list').remove();
         });
+        $(".box-response-data").css('display', 'none');
         $('.test-api').click(function(){
             var url_api = $(".url_api").val();
             var method_type = $(".method_type").val();
@@ -373,7 +379,6 @@
                 param_description: param_description,
                 param_type: param_type,
                 param_require: param_require,
-                
             };
             console.log(url_api, method_type, param_key, param_value, param_description, param_type, param_require);
             $("#loadMe").modal({
@@ -387,9 +392,10 @@
                 data: data,
                 success:function(response){
                     $("#loadMe").modal("hide");
+                    $(".box-response-data").css('display', 'block');
                     var info = JSON.stringify(response.data,null,"\t");
                     $(".data-response").html('');
-                    $(".data-response").append(info);
+                    $(".data-response").append('<pre>'+info+'</pre>');
                 },
             });
         });
