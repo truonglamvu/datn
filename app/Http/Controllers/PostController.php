@@ -409,9 +409,11 @@ class PostController extends Controller
         // API: + https://api.edumall.vn/api/courses/all/basic method: GET
         //      + https://jsonplaceholder.typicode.com/posts
         //      + https://jsonplaceholder.typicode.com/posts?id=2&userID=1
+        // authorization: 99cdedb8-7cec-486b-b5b0-cd680a7d12cb
         $client = new \GuzzleHttp\Client();
         $params_api = [];
-        if (count($request['param_key']) > 0 && count($request['param_value'])) {
+        $header = [];
+        if (count($request['param_key']) > 0 && count($request['param_value']) > 0) {
             foreach ($request['param_key'] as $key => $field) {
                 foreach ($request['param_value'] as $key1 => $value) {
                     if ($key == $key1) {
@@ -419,6 +421,21 @@ class PostController extends Controller
                     }
                 }
             }
+        }
+        $header_field = "";
+        if (count($request['param_header']) > 0 && count($request['header_value']) > 0) {
+            foreach ($request['param_header'] as $key => $field) {
+                foreach ($request['header_value'] as $key1 => $value) {
+                    if ($key == $key1) {
+                        $header[$field] = $value;
+                    }
+                    if($field != "" && $value != ""){
+                        $header_field = 'headers';  
+                    }
+                }
+
+            }
+            
         }
         $type_method = '';
         if ($request['method_type'] == "GET") {
@@ -430,11 +447,8 @@ class PostController extends Controller
             $result = $client->request($request['method_type'], $request['url_api'],
                 [
                     $type_method => $params_api,
-                    'headers' =>
-                    [
-                        'authorization' => '99cdedb8-7cec-486b-b5b0-cd680a7d12cb'
-                    ]
-                    
+                    $header_field => $header,
+                    'http_errors' => true
                 ]
             );
             $body = json_decode($result->getBody(), true);

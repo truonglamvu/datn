@@ -350,6 +350,8 @@
             var param_description = [];
             var param_type = [];
             var param_require = [];
+            var param_header = [];
+            var header_value = [];
             $('input[name^="description_parameter_key"]').each(function() {
                 param_key.push($(this).val());
             });
@@ -365,6 +367,12 @@
             $('input[name^="description_parameter_required"]').each(function() {
                 param_require.push($(this).val());
             });
+            $('input[name^="header_key"]').each(function() {
+                param_header.push($(this).val());
+            });
+            $('input[name^="header_value"]').each(function() {
+                header_value.push($(this).val());
+            });
             var data = {
                 url_api: url_api,
                 method_type: method_type,
@@ -373,9 +381,9 @@
                 param_description: param_description,
                 param_type: param_type,
                 param_require: param_require,
-                
+                param_header: param_header,
+                header_value: header_value
             };
-            console.log(url_api, method_type, param_key, param_value, param_description, param_type, param_require);
             $("#loadMe").modal({
               backdrop: "static", //remove ability to close modal with click
               keyboard: false, //remove option to close with keyboard
